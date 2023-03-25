@@ -142,14 +142,16 @@ const Navbar = () => {
                     key={page.name}
                   >
                     <MenuItem onClick={handleCloseNavMenu}>
-                      <Typography>{page.name}</Typography>
+                      <Button onClick={handleCloseNavMenu}>
+                        <Typography>{page.name}</Typography>
+                      </Button>
                     </MenuItem>
                   </Link>
                 ))}
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Tooltip title="Dark Mode">
                     <IconButton
-                      onClick={handleOpenUserMenu}
+                      onClick={handleTheme}
                       sx={{ p: 0, marginRight: "20px" }}
                     >
                       <NightlightIcon
