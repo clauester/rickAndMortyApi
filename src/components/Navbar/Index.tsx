@@ -16,8 +16,11 @@ import { Link } from "react-router-dom";
 import { navbar_pages } from "../../utils/constans/Index";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import ThemeContext from "../Context/ThemeContext";
+
 const Navbar = () => {
+  const { theme, handleTheme } = useContext(ThemeContext);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -83,7 +86,10 @@ const Navbar = () => {
 
             <Box>
               <Tooltip title="Dark Mode">
-                <IconButton sx={{ p: 0, marginRight: "20px" }}>
+                <IconButton
+                  sx={{ p: 0, marginRight: "20px" }}
+                  onClick={handleTheme}
+                >
                   <NightlightIcon color="primary" />
                 </IconButton>
               </Tooltip>
