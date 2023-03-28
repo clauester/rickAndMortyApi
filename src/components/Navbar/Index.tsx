@@ -134,7 +134,7 @@ const Navbar = () => {
               }}
             >
               {open ? (
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ width: "100%", padding: "20px 20px" }}>
                   <List>
                     {navbar_pages.map((pages) => (
                       <Link
@@ -143,15 +143,19 @@ const Navbar = () => {
                         style={{ textDecoration: "none" }}
                         onClick={handleClose}
                       >
-                        <ListItemButton>
-                          <Typography color="primary">{pages.name}</Typography>
+                        <ListItemButton sx={{ p: 0, height: "50px" }}>
+                          <Typography color="primary" variant="subtitle1">
+                            {pages.name}
+                          </Typography>
                         </ListItemButton>
                       </Link>
                     ))}
-                    <ListItemButton>
+                    <ListItemButton
+                      sx={{ justifyContent: "center", padding: "20px 0px" }}
+                    >
                       <Tooltip title="Dark Mode">
                         <IconButton
-                          sx={{ p: 0, marginRight: "20px" }}
+                          sx={{ p: 0, marginRight: "50px" }}
                           onClick={handleTheme}
                         >
                           <NightlightIcon color="primary" />
