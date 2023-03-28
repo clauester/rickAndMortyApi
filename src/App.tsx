@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+//import './App.css'
+import Navbar from "./components/Navbar/Index";
+import Router from "./Routes/Routes";
+import { Suspense, useContext, useState } from "react";
+import Loading from "./components/Loading/Loading";
+import { ThemeProvider } from "@mui/material/styles";
+import { changeTheme } from "./theme/index";
+import CssBaseline from "@mui/material/CssBaseline";
+import ThemeContext from "./components/Context/ThemeContext";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { theme } = useContext(ThemeContext);
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <ThemeProvider theme={changeTheme(theme)}>
+      <CssBaseline />
+      <div className="App">
+        <Suspense fallback={<Loading />}>
+          <Navbar />
+          <Router />
+        </Suspense>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
