@@ -13,12 +13,8 @@ const initialTheme = "light";
 
 const ContextProvider = ({ children }: any) => {
   const [theme, setTheme] = useState<"light" | "dark">(initialTheme);
-  const [flag, setFlag] = useState(false);
 
-  const handleTheme = () => {
-    setFlag(!flag);
-    flag ? setTheme("light") : setTheme("dark");
-  };
+  const handleTheme = () => setTheme(theme === "light" ? "dark" : "light");
 
   const data = { theme, handleTheme };
 

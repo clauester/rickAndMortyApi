@@ -18,29 +18,24 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState, useContext } from "react";
 import ThemeContext from "../Context/ThemeContext";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { makeStyles } from "@mui/material/styles";
+import { createStyles, ListItemButton, Theme } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 const Navbar = () => {
   const { theme, handleTheme } = useContext(ThemeContext);
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [open, setOpen] = useState(false);
 
-  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
+  const handleOpen = () => {
+    setOpen(true);
   };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -71,7 +66,6 @@ const Navbar = () => {
                   key={page.name}
                 >
                   <Button
-                    onClick={handleCloseNavMenu}
                     sx={{
                       my: 0,
                       mx: "4px",
@@ -94,7 +88,7 @@ const Navbar = () => {
                 </IconButton>
               </Tooltip>
               <Tooltip title="GitHub">
-                <IconButton onClick={handleOpenUserMenu}>
+                <IconButton>
                   <GitHubIcon color="primary" />
                 </IconButton>
               </Tooltip>
@@ -114,67 +108,65 @@ const Navbar = () => {
             </Box>
 
             <Box>
-              <IconButton size="large" onClick={handleOpenNavMenu}>
-                <MenuIcon color="primary" />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {navbar_pages.map((page) => (
-                  <Link
-                    to={page.link}
-                    style={{ textDecoration: "none" }}
-                    key={page.name}
-                  >
-                    <MenuItem onClick={handleCloseNavMenu}>
-                      <Button onClick={handleCloseNavMenu}>
-                        <Typography>{page.name}</Typography>
-                      </Button>
-                    </MenuItem>
-                  </Link>
-                ))}
-                <MenuItem onClick={handleCloseNavMenu}>
-                  <Tooltip title="Dark Mode">
-                    <IconButton
-                      onClick={handleTheme}
-                      sx={{ p: 0, marginRight: "20px" }}
-                    >
-                      <NightlightIcon
-                        sx={{
-                          display: { xs: "flex", md: "none" },
-                        }}
-                        color="primary"
-                      />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="GitHub">
-                    <IconButton onClick={handleOpenUserMenu}>
-                      <GitHubIcon
-                        sx={{
-                          display: { xs: "flex", md: "none" },
-                        }}
-                        color="primary"
-                      />
-                    </IconButton>
-                  </Tooltip>
-                </MenuItem>
-              </Menu>
+              {!open ? (
+                <IconButton size="large" onClick={handleOpen}>
+                  <MenuIcon color="primary" />
+                </IconButton>
+              ) : (
+                <IconButton size="large" onClick={handleClose}>
+                  <CloseIcon color="primary" />
+                </IconButton>
+              )}
             </Box>
+
+            <Drawer
+              variant="persistent"
+              anchor="left"
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                sx: {
+                  width: "100%",
+                  marginTop: "92.4px",
+                  borderTopWidth: "1px",
+                  borderTopStyle: "solid",
+                },
+              }}
+            >
+              {open ? (
+                <Box sx={{ width: "100%" }}>
+                  <List>
+                    {navbar_pages.map((pages) => (
+                      <Link
+                        to={pages.link}
+                        key={pages.name}
+                        style={{ textDecoration: "none" }}
+                        onClick={handleClose}
+                      >
+                        <ListItemButton>
+                          <Typography color="primary">{pages.name}</Typography>
+                        </ListItemButton>
+                      </Link>
+                    ))}
+                    <ListItemButton>
+                      <Tooltip title="Dark Mode">
+                        <IconButton
+                          sx={{ p: 0, marginRight: "20px" }}
+                          onClick={handleTheme}
+                        >
+                          <NightlightIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="GitHub">
+                        <IconButton>
+                          <GitHubIcon color="primary" />
+                        </IconButton>
+                      </Tooltip>
+                    </ListItemButton>
+                  </List>
+                </Box>
+              ) : null}
+            </Drawer>
           </Box>
         </Toolbar>
       </Content>
