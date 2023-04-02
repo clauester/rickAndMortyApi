@@ -13,7 +13,7 @@ function App() {
   return (
     <ThemeProvider theme={changeTheme(theme)}>
       <CssBaseline />
-      <div className="App">
+      <div>
         <Suspense fallback={<Loading />}>
           <Navbar />
           <Router />

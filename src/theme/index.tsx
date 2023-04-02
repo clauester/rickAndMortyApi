@@ -10,6 +10,13 @@ export const changeTheme = (mode: "light" | "dark") =>
             primary: {
               main: "#1D212C",
             },
+            common: {
+              white: "#fff",
+            },
+            secondary: {
+              main: "rgba(249, 249, 249, 0.77)",
+            },
+
             background: {
               default: "#ECECEC",
               paper: "#fff",
@@ -73,6 +80,9 @@ export const changeTheme = (mode: "light" | "dark") =>
       },
       body1: {
         fontSize: "16px",
+      },
+      body2: {
+        fontSize: "10px",
       },
     },
   });
