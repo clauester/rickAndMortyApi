@@ -2,13 +2,11 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import { Grid } from "@mui/material";
 
 const ItemCard = ({ characters }: any) => {
-  console.log(characters);
   return (
     <Box
       sx={{
@@ -17,8 +15,6 @@ const ItemCard = ({ characters }: any) => {
         gridColumnGap: "25px",
         gridRowGap: "30px",
         padding: "30px 0px 0px 0px",
-        //flexGrow: 1,
-        //width: "100%",
       }}
     >
       {characters.map((data: any) => (
@@ -26,13 +22,8 @@ const ItemCard = ({ characters }: any) => {
           key={data.id}
           sx={{
             borderRadius: "10px",
-            // width: "100%",
+
             textAlign: "center",
-            // height: "100%",
-            // background: "gray",
-            //display: "flex",
-            // flexDirection: "column",
-            // justifyContent: "flex-end",
           }}
         >
           <CardActionArea sx={{ height: "100%" }}>
@@ -50,7 +41,12 @@ const ItemCard = ({ characters }: any) => {
                 sx={{
                   width: "160px",
                   height: "160px",
-                  borderColor: "green",
+                  borderColor:
+                    data.status === "Dead"
+                      ? "#B91C1C"
+                      : data.status === "Alive"
+                      ? "#74CB48"
+                      : "#A2A2A2",
                   borderWidth: "5px",
                   borderStyle: "solid",
                   margin: "10px",
@@ -61,7 +57,6 @@ const ItemCard = ({ characters }: any) => {
                 <Typography
                   sx={{
                     wordWrap: "break-word",
-                    //width: "150px",
                     marginBottom: "5px",
                   }}
                   variant="body1"
@@ -75,11 +70,14 @@ const ItemCard = ({ characters }: any) => {
             </Grid>
             <CardContent
               sx={{
-                background: "green",
+                background:
+                  data.status === "Dead"
+                    ? "#B91C1C"
+                    : data.status === "Alive"
+                    ? "#74CB48"
+                    : "#A2A2A2",
                 padding: "0px",
                 height: "30px",
-
-                //  alignSelf: "flex-end",
               }}
             >
               <Typography variant="body1" color="common.white">

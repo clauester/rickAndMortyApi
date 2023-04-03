@@ -1,4 +1,3 @@
-import { Box, Typography } from "@mui/material";
 import Card from "../components/Card";
 import Content from "../components/Content/Index";
 import Grid from "@mui/material/Grid";
@@ -6,19 +5,47 @@ import TextField from "@mui/material/TextField";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCharacters } from "../Services/Api";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ItemCard from "../components/ItemCard";
 import Filter from "../components/Filter/Index";
-const Characters = () => {
-  const [characters, setCharacters] = useState([]);
 
+const Characters = () => {
+  interface GlobalFilter {
+    type: string;
+    value: string;
+  }
+  const [characters, setCharacters] = useState([]);
+  const [textFilter, setTextFilter] = useState("");
+  const [radioFilter, setRadioFilter] = useState<GlobalFilter[]>([]);
+  let inputValue: string;
+  const handleTextFilter = (value: string) => {
+    setTextFilter(value);
+  };
+
+  const cleanFilter = () => {
+    setRadioFilter([]);
+    setTextFilter("");
+  };
+
+  const handleRadioFilter = (value: GlobalFilter) => {
+    const index = radioFilter.findIndex((item) => item.type === value.type);
+    if (index === -1) {
+      setRadioFilter([
+        ...radioFilter,
+        { type: value.type, value: value.value },
+      ]);
+    } else {
+      const updatedData = [...radioFilter];
+      updatedData[index] = { type: value.type, value: value.value };
+      setRadioFilter(updatedData);
+    }
+  };
+  console.log(radioFilter);
   useEffect(() => {
-    getCharacters()
+    getCharacters(textFilter, radioFilter)
       .then((response) => setCharacters(response.data.results))
       .catch((error) => console.error(error));
-  }, []);
+  }, [textFilter || radioFilter]);
 
-  //console.log(characters);
   return (
     <Content pt="132px">
       <Card>
@@ -28,12 +55,14 @@ const Characters = () => {
           width="100%"
           sx={{ display: { xs: "none", md: "flex" } }}
         >
-          <Filter />
+          <Filter data={handleRadioFilter} clean={cleanFilter} />
 
           <Grid item sx={{ flexGrow: 1 }}>
             <TextField
+              onChange={(e) => handleTextFilter(e.target.value)}
               fullWidth
               id="fullWidth"
+              value={textFilter}
               placeholder="Search..."
               inputProps={{
                 style: {

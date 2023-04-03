@@ -14,12 +14,14 @@ import {
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { filter } from "../../utils/constans/Index";
-
-const Filter = () => {
+interface GlobalFilter {
+  type: string;
+  value: string;
+}
+const Filter = ({ data, clean }: any) => {
   const [selectedValueStatus, setSelectedValueStatus] = useState("");
   const [selectedValueGender, setSelectedValueGender] = useState("");
   const [selectedValueSpecie, setSelectedValueSpecie] = useState("");
-  console.log(selectedValueStatus);
 
   const [openStatus, setOpenStatus] = useState(false);
   const [openSpecie, setOpenSpecie] = useState(false);
@@ -40,11 +42,11 @@ const Filter = () => {
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    type: any
+    filterType: string
   ) => {
     const value = event.target.value;
-    console.log(value);
-    switch (type) {
+
+    switch (filterType) {
       case "gender":
         setSelectedValueGender(value);
         break;
@@ -54,6 +56,14 @@ const Filter = () => {
       case "species":
         setSelectedValueSpecie(value);
     }
+    data({ type: filterType, value: value });
+  };
+
+  const handleClean = () => {
+    clean();
+    setSelectedValueStatus("");
+    setSelectedValueGender("");
+    setSelectedValueSpecie("");
   };
   return (
     <Grid
@@ -68,7 +78,18 @@ const Filter = () => {
         <Typography sx={{ flexGrow: 1 }} variant="h4" fontWeight={700}>
           Filters
         </Typography>
-        <DeleteIcon sx={{ width: "30px", height: "auto" }} />
+        <ListItemButton
+          sx={{
+            padding: "0px",
+
+            justifyContent: "right",
+          }}
+        >
+          <DeleteIcon
+            onClick={handleClean}
+            sx={{ width: "30px", height: "auto" }}
+          />
+        </ListItemButton>
       </Box>
       <List>
         <ListItemButton
@@ -158,18 +179,3 @@ const Filter = () => {
 };
 
 export default Filter;
-
-{
-  /* <FormControl>
-  <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-  <RadioGroup
-    aria-labelledby="demo-radio-buttons-group-label"
-    defaultValue="female"
-    name="radio-buttons-group"
-  >
-    <FormControlLabel value="female" control={<Radio />} label="Female" />
-    <FormControlLabel value="male" control={<Radio />} label="Male" />
-    <FormControlLabel value="other" control={<Radio />} label="Other" />
-  </RadioGroup>
-</FormControl> */
-}
