@@ -39,7 +39,7 @@ const Characters = () => {
       setRadioFilter(updatedData);
     }
   };
-  console.log(radioFilter);
+
   useEffect(() => {
     getCharacters(textFilter, radioFilter)
       .then((response) => setCharacters(response.data.results))
@@ -55,8 +55,7 @@ const Characters = () => {
           width="100%"
           sx={{ display: { xs: "none", md: "flex" } }}
         >
-          <Filter data={handleRadioFilter} clean={cleanFilter} />
-
+          <Filter handleSearchFilter={handleRadioFilter} clean={cleanFilter} />
           <Grid item sx={{ flexGrow: 1 }}>
             <TextField
               onChange={(e) => handleTextFilter(e.target.value)}

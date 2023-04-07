@@ -5,8 +5,14 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import { Grid } from "@mui/material";
+import { colorStatus } from "../../utils/constans/Index";
 
 const ItemCard = ({ characters }: any) => {
+
+  const getColorStatus = (status: string) => {
+    return colorStatus[status as keyof typeof colorStatus];
+  }
+
   return (
     <Box
       sx={{
@@ -41,12 +47,7 @@ const ItemCard = ({ characters }: any) => {
                 sx={{
                   width: "160px",
                   height: "160px",
-                  borderColor:
-                    data.status === "Dead"
-                      ? "#B91C1C"
-                      : data.status === "Alive"
-                      ? "#74CB48"
-                      : "#A2A2A2",
+                  borderColor: getColorStatus(data.status),
                   borderWidth: "5px",
                   borderStyle: "solid",
                   margin: "10px",
@@ -70,12 +71,7 @@ const ItemCard = ({ characters }: any) => {
             </Grid>
             <CardContent
               sx={{
-                background:
-                  data.status === "Dead"
-                    ? "#B91C1C"
-                    : data.status === "Alive"
-                    ? "#74CB48"
-                    : "#A2A2A2",
+                background: getColorStatus(data.status),
                 padding: "0px",
                 height: "30px",
               }}
