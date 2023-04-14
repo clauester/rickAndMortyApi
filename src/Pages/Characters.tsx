@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { getCharacters } from "../Services/Api";
 import { useEffect, useState } from "react";
-import ItemCard from "../components/ItemCard";
+import ContentCard from "../components/ContentCard";
 import Filter from "../components/Filter/Index";
 
 const Characters = () => {
@@ -16,11 +16,12 @@ const Characters = () => {
   const [characters, setCharacters] = useState([]);
   const [textFilter, setTextFilter] = useState("");
   const [radioFilter, setRadioFilter] = useState<GlobalFilter[]>([]);
-  let inputValue: string;
+  //let inputValue: string;
   const handleTextFilter = (value: string) => {
     setTextFilter(value);
   };
 
+  console.log(radioFilter);
   const cleanFilter = () => {
     setRadioFilter([]);
     setTextFilter("");
@@ -39,7 +40,7 @@ const Characters = () => {
       setRadioFilter(updatedData);
     }
   };
-  console.log(radioFilter);
+
   useEffect(() => {
     getCharacters(textFilter, radioFilter)
       .then((response) => setCharacters(response.data.results))
@@ -55,7 +56,7 @@ const Characters = () => {
           width="100%"
           sx={{ display: { xs: "none", md: "flex" } }}
         >
-          <Filter data={handleRadioFilter} clean={cleanFilter} />
+          <Filter handleSearchFilter={handleRadioFilter} clean={cleanFilter} />
 
           <Grid item sx={{ flexGrow: 1 }}>
             <TextField
@@ -78,7 +79,7 @@ const Characters = () => {
                 },
               }}
             />
-            <ItemCard characters={characters} />
+            <ContentCard characters={characters} />
           </Grid>
         </Grid>
       </Card>

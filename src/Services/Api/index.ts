@@ -9,7 +9,8 @@ export const getCharacters = async (name: string, global: GlobalFilter[]) => {
     data2 = data2 + `&${data.type}=${data.value}`;
   });
   const data = `/?name=${name}${data2}`;
-  console.log(data2);
+  // console.log(data2);
+  // console.log(data);
   const response = await axios.get(
     `https://rickandmortyapi.com/api/character${data}`
   );

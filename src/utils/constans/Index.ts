@@ -21,3 +21,8 @@ export const filter = {
     data: ["Male", "Female"],
   },
 };
+export const colorStatus = {
+  Alive: "#74CB48",
+  Dead: "#B91C1C",
+  unknown: "#A2A2A2",
+};

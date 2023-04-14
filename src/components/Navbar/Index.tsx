@@ -55,7 +55,12 @@ const Navbar = () => {
           >
             <Box mr="10px">
               <Link to="/characters">
-                <img src={logo} width="150px" height="46px" />
+                <img
+                  alt="Rick and Morty Logo"
+                  src={logo}
+                  width="150px"
+                  height="46px"
+                />
               </Link>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
