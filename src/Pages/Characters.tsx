@@ -7,6 +7,7 @@ import { getCharacters } from "../Services/Api";
 import { useEffect, useState } from "react";
 import ContentCard from "../components/ContentCard";
 import Filter from "../components/Filter/Index";
+import i18n from "../config/i18n";
 
 const Characters = () => {
   interface GlobalFilter {
@@ -45,7 +46,7 @@ const Characters = () => {
     getCharacters(textFilter, radioFilter)
       .then((response) => setCharacters(response.data.results))
       .catch((error) => console.error(error));
-  }, [textFilter || radioFilter]);
+  }, [textFilter, radioFilter]);
 
   return (
     <Content pt="132px">
@@ -64,7 +65,7 @@ const Characters = () => {
               fullWidth
               id="fullWidth"
               value={textFilter}
-              placeholder="Search..."
+              placeholder={i18n.t("filter.search")}
               inputProps={{
                 style: {
                   marginLeft: "20px",

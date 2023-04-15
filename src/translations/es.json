@@ -1,0 +1,17 @@
+{
+  "navbar": {
+    "characters": "Personajes",
+    "locations": "Ubicaciones",
+    "episodes": "Episodios",
+    "favoriteCharacters": "Mis Personajes Favoritos",
+    "darkMode": "Modo Oscuro"
+  },
+  "filter": {
+    "filters": "Filtros",
+    "search": "Buscar...",
+    "status": {
+      "title": "Estado",
+      "alive": "Vivo"
+    }
+  }
+}

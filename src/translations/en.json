@@ -1,0 +1,17 @@
+{
+  "navbar": {
+    "characters": "Characters",
+    "locations": "Locations",
+    "episodes": "Episodes",
+    "favoriteCharacters": "My Favorites Characters",
+    "darkMode": "Dark Mode"
+  },
+  "filter": {
+    "filters": "Filters",
+    "search": "Search...",
+    "status": {
+      "title": "Status",
+      "alive": "Alive"
+    }
+  }
+}

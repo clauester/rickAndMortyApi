@@ -7,6 +7,7 @@ import { List, ListItemButton } from "@mui/material";
 import { filter } from "../../utils/constans/Index";
 import TitleFilterBy from "../TitleFilterBy";
 import ContentFilterOptions from "../ContentFilterOptions";
+import i18n from "../../config/i18n";
 
 interface Filter {
   title: string;
@@ -102,7 +103,7 @@ const Filter = ({ handleSearchFilter, clean }: any) => {
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ flexGrow: 1 }} variant="h4" fontWeight={700}>
-          Filters
+          {i18n.t("filter.filters")}
         </Typography>
         <ListItemButton
           sx={{

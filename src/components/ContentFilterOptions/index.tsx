@@ -30,7 +30,12 @@ const ContentFilterOptions = ({
       <List component="div" disablePadding>
         {list.map((data: string) => (
           <ListItemButton
-            sx={{ p: 0, alignItems: "center", m: "20px 0px" }}
+            sx={{
+              p: 0,
+              alignItems: "center",
+              marginBottom: "20px",
+              marginLeft: "5px",
+            }}
             key={data}
           >
             <Radio
