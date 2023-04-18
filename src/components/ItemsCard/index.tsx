@@ -2,19 +2,33 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
 import { Grid } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Box from "@mui/material/Box";
 import { colorStatus } from "../../utils/constans/Index";
 
-const ItemCard = ({ data }: any) => {
+interface ItemCardProps {
+  id: string;
+  name: string;
+  image: string;
+  species: string;
+  status: string;
+  gender: string;
+}
+
+const ItemCard = ({
+  id,
+  name,
+  image,
+  species,
+  status,
+  gender,
+}: ItemCardProps) => {
   const getColorStatus = (status: string) => {
     return colorStatus[status as keyof typeof colorStatus];
   };
   return (
     <Card
-      key={data.id}
       sx={{
         borderRadius: "10px",
         textAlign: "center",
@@ -27,18 +41,17 @@ const ItemCard = ({ data }: any) => {
             display: "grid",
             justifyContent: "center",
             flex: 1,
-            height: "250px",
           }}
         >
           <LazyLoadImage
-            src={data.image}
+            src={image}
             effect="blur"
             alt={"imgen"}
             width={160}
             height={160}
             style={{
               borderRadius: "160px",
-              borderColor: getColorStatus(data.status),
+              borderColor: getColorStatus(status),
               borderWidth: "5px",
               borderStyle: "solid",
             }}
@@ -56,22 +69,21 @@ const ItemCard = ({ data }: any) => {
               }}
               variant="body1"
             >
-              {data.name}
+              {name}
             </Typography>
             <Typography variant="body2" mb="5px">
-              {data.species} | {data.gender}
+              {species} | {gender}
             </Typography>
           </Box>
         </Grid>
         <CardContent
           sx={{
-            background: getColorStatus(data.status),
+            background: getColorStatus(status),
             padding: "0px",
-            height: "30px",
           }}
         >
           <Typography variant="body1" color="common.white" textAlign="center">
-            {data.status}
+            {status}
           </Typography>
         </CardContent>
       </CardActionArea>

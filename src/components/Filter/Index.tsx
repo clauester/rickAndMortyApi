@@ -98,7 +98,6 @@ const Filter = ({ handleSearchFilter, clean }: any) => {
       sx={{
         height: "100%",
         width: "230px",
-        paddingRight: "70px",
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>

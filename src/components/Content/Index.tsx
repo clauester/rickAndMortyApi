@@ -1,7 +1,4 @@
-//max width 1200px, padding-left/right 20px, margin auto 0
-
 import Box from "@mui/material/Box";
-import { PropsWithChildren } from "react";
 
 const Content = (props: any) => {
   return (

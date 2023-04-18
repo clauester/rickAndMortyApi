@@ -6,6 +6,8 @@ import {
   Radio,
   Typography,
 } from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { colorStatus } from "../../utils/constans/Index";
 
 interface ContentFilterOptionsProps {
   title: string;
@@ -25,15 +27,22 @@ const ContentFilterOptions = ({
   isChecked,
   handleChange,
 }: ContentFilterOptionsProps) => {
+  //console.log(title);
+  const getColorStatus = (status: string) => {
+    return colorStatus[status as keyof typeof colorStatus];
+  };
   return (
     <Collapse in={isOpen} timeout="auto" unmountOnExit sx={{ p: 0 }}>
-      <List component="div" disablePadding>
+      <List
+        component="div"
+        disablePadding
+        sx={{ rowGap: "20px", display: "grid" }}
+      >
         {list.map((data: string) => (
           <ListItemButton
             sx={{
               p: 0,
               alignItems: "center",
-              marginBottom: "20px",
               marginLeft: "5px",
             }}
             key={data}
@@ -43,7 +52,9 @@ const ContentFilterOptions = ({
               onChange={(e) => handleChange(e, title)}
               value={data}
               sx={{ p: "0 10px 0 0px  ", width: "24px", height: "24px" }}
+              checkedIcon={<CheckCircleIcon sx={{ color: "#74CB48" }} />}
             />
+
             <Typography variant="body1">{data}</Typography>
           </ListItemButton>
         ))}
