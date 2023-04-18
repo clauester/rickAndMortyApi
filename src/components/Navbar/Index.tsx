@@ -2,11 +2,8 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import logo from "../../assets/Images/g115.svg";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import * as React from "react";
-import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -14,16 +11,12 @@ import NightlightIcon from "@mui/icons-material/Nightlight";
 import Content from "../Content/Index";
 import { Link } from "react-router-dom";
 import { navbar_pages } from "../../utils/constans/Index";
-import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState, useContext } from "react";
 import ThemeContext from "../Context/ThemeContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { makeStyles } from "@mui/material/styles";
-import { createStyles, ListItemButton, Theme } from "@mui/material";
+import { ListItemButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Navbar = () => {
@@ -55,7 +48,12 @@ const Navbar = () => {
           >
             <Box mr="10px">
               <Link to="/characters">
-                <img src={logo} width="150px" height="46px" />
+                <img
+                  alt="Rick and Morty Logo"
+                  src={logo}
+                  width="150px"
+                  height="46px"
+                />
               </Link>
             </Box>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
