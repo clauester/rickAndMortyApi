@@ -18,8 +18,16 @@ interface InfoProps {
   count: number;
   prevUrl: string;
 }
+interface FavoriteCharactersProps {
+  id: string;
+}
 const Characters = () => {
-  const [characters, setCharacters] = useState([]);
+  // console.log(localStorage.getItem("favorites"));
+
+  const [characters, setCharacters] = useState<any[]>([]);
+  const [favoriteCharacters, setFavoriteCharacters] = useState<
+    FavoriteCharactersProps[]
+  >([]);
   const [textFilter, setTextFilter] = useState("");
   const [radioFilter, setRadioFilter] = useState<GlobalFilter[]>([]);
   const [pageNum, setPageNum] = useState(1);
@@ -29,17 +37,47 @@ const Characters = () => {
     count: 0,
     prevUrl: "",
   });
+  useEffect(() => {
+    const store = localStorage.getItem("favorites");
+    //setFavoriteCharacters(store as keyof typeof favoriteCharacters)
+    console.log("chacnito feliz", store);
+  }, []);
 
+  // const favs = localStorage.getItem("favorites");
+  // if (favoriteCharacters.length === 0) {
+  //   console.log("estoy vacio");
+  //   setFavoriteCharacters(JSON.parse(favs || "{}"));
+  // }
+  // const favoritosGuardados = localStorage.getItem("favorites");
+  // if (favoritosGuardados) {
+  //   setFavoriteCharacters(JSON.parse(favoritosGuardados));
+  // }
   const handleTextFilter = (value: string) => {
     setTextFilter(value);
     setPageNum(1);
   };
+  const handleFavorite = (value: string) => {
+    const index = favoriteCharacters.findIndex((elem) => elem.id === value);
+    if (index === -1) {
+      const newFavorites = [...favoriteCharacters, { id: value }];
+      setFavoriteCharacters(newFavorites);
 
-  // console.log(radioFilter);
+      // localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      //console.log(localStorage.getItem("favorites"));
+    } else {
+      console.log("personaje preexistente");
+      const newArray = [...favoriteCharacters];
+      newArray.splice(index, 1);
+      setFavoriteCharacters(newArray);
+      console.log("personaje eliminado: ", index);
+    }
+  };
+  console.log(localStorage.getItem("favorites"));
   const cleanFilter = () => {
     setRadioFilter([]);
     setTextFilter("");
   };
+  //localStorage.removeItem("favorites");
 
   const handleRadioFilter = (value: GlobalFilter) => {
     const index = radioFilter.findIndex((item) => item.type === value.type);
@@ -59,7 +97,7 @@ const Characters = () => {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    console.log(value);
+    //console.log(value);
     setPageNum(value);
   };
   useEffect(() => {
@@ -77,8 +115,13 @@ const Characters = () => {
         console.error(error);
         setPageNum(1);
       });
-  }, [textFilter, radioFilter, pageNum]);
+  }, [textFilter, radioFilter, pageNum, favoriteCharacters]);
 
+  useEffect(() => {
+    const favoritosGuardados = localStorage.getItem("favorites");
+    console.log("favoritosGuardados", favoritosGuardados);
+    localStorage.setItem("favorites", JSON.stringify(favoriteCharacters));
+  }, [favoriteCharacters]);
   return (
     <Content pt="132px">
       <Card>
@@ -111,7 +154,10 @@ const Characters = () => {
                 },
               }}
             />
-            <ContentCard characters={characters} />
+            <ContentCard
+              characters={characters}
+              handleFavorite={handleFavorite}
+            />
             <PagePagination
               handlePage={handlePageChange}
               pageInfo={pageInfo}

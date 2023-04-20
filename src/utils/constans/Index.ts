@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { routes } from "../../Routes/Routes";
 import i18n from "../../config/i18n";
 
@@ -6,7 +7,7 @@ export const navbar_pages = [
   { name: i18n.t("navbar.locations"), link: routes.navbar.locations.path },
   { name: i18n.t("navbar.episodes"), link: routes.navbar.episodes.path },
   {
-    name: i18n.t("navbar.favoriteCharacters"),
+    name: `${i18n.t("navbar.favoriteCharacters")}: `,
     link: routes.navbar.favorites.path,
   },
 ];

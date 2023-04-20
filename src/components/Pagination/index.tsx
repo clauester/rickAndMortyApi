@@ -20,10 +20,15 @@ const PagePagination = ({
   pageInfo,
   actualPage,
 }: PagepaginationProps) => {
-  console.log(pageInfo);
+  // console.log(pageInfo);
 
   return (
-    <Box display="flex" justifyContent="center">
+    <Box
+      display="grid"
+      justifyContent="center"
+      height="50px"
+      alignItems="center"
+    >
       <Pagination
         count={pageInfo.totalPages}
         page={actualPage}
@@ -39,6 +44,9 @@ const PagePagination = ({
           },
           "& .MuiPaginationItem-page": {
             fontSize: "16px",
+          },
+          "& .MuiPagination-ul": {
+            gap: "25px",
           },
         }}
         onChange={handlePage}

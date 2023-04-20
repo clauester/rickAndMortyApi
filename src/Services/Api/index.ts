@@ -14,7 +14,7 @@ export const getCharacters = async (
   });
   const pageNumber = `page=${page}`;
   const data = `/?${pageNumber}&name=${name}${data2}`;
-  console.log(data);
+  //console.log(data);
 
   const response = await axios.get(
     `https://rickandmortyapi.com/api/character${data}`

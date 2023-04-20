@@ -6,6 +6,7 @@ import { Grid } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Box from "@mui/material/Box";
 import { colorStatus } from "../../utils/constans/Index";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 interface ItemCardProps {
   id: string;
@@ -14,6 +15,7 @@ interface ItemCardProps {
   species: string;
   status: string;
   gender: string;
+  handleClick: (id: string) => void;
 }
 
 const ItemCard = ({
@@ -23,18 +25,38 @@ const ItemCard = ({
   species,
   status,
   gender,
+  handleClick,
 }: ItemCardProps) => {
   const getColorStatus = (status: string) => {
     return colorStatus[status as keyof typeof colorStatus];
+  };
+  const addFavorite = () => {
+    handleClick(id);
+    console.log("personaje añadido: ", name);
   };
   return (
     <Card
       sx={{
         borderRadius: "10px",
         textAlign: "center",
+        position: "relative",
       }}
     >
       <CardActionArea sx={{ height: "100%" }}>
+        <FavoriteIcon
+          sx={{
+            position: "absolute",
+            left: "15px",
+            top: "15px",
+            height: "20.54px",
+            color: "rgba(162, 162, 162, 0.5);",
+            transition: "background-color 0.3s ease-in-out",
+            "&:hover": {
+              color: "#B91C1C",
+            },
+          }}
+          onClick={addFavorite}
+        />
         <Grid
           sx={{
             marginTop: "15px",
