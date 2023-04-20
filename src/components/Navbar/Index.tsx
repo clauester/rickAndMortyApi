@@ -12,7 +12,7 @@ import Content from "../Content/Index";
 import { Link } from "react-router-dom";
 import { navbar_pages } from "../../utils/constans/Index";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ThemeContext from "../Context/ThemeContext";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -23,6 +23,11 @@ const Navbar = () => {
   const { theme, handleTheme } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
 
+  const [favoriteCounter, setfavoriteCounter] = useState(
+    JSON.parse(localStorage.getItem("favorites") || "{}")
+  );
+  //console.log("navbar: ", favoriteCounter);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -30,6 +35,26 @@ const Navbar = () => {
   const handleClose = () => {
     setOpen(false);
   };
+
+  // useEffect(() => {
+  //   // const store = localStorage.getItem("favorites");
+  //   // if (store) {
+  //   //   setfavoriteCounter(JSON.parse(store));
+  //   // }
+  //   console.log("navbar: ", favoriteCounter.length);
+  // }, [favoriteCounter]);
+
+  useEffect(() => {
+    const listener = () => {
+      const ids = localStorage.getItem("favorites");
+      const count = ids ? Object.keys(JSON.parse(ids)).length : "";
+      setfavoriteCounter(count);
+    };
+
+    window.addEventListener("storage", listener);
+
+    return () => window.removeEventListener("storage", listener);
+  }, [localStorage]);
 
   return (
     <AppBar elevation={0} sx={{ bgcolor: "background.paper" }}>
@@ -70,7 +95,11 @@ const Navbar = () => {
                       display: "block",
                     }}
                   >
-                    <Typography>{page.name}</Typography>
+                    <Typography>
+                      {page.link === "/favorites"
+                        ? `${page.name}: ${favoriteCounter.length}`
+                        : page.name}
+                    </Typography>
                   </Button>
                 </Link>
               ))}

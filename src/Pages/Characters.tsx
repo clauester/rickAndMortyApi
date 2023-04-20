@@ -37,11 +37,6 @@ const Characters = () => {
     count: 0,
     prevUrl: "",
   });
-  useEffect(() => {
-    const store = localStorage.getItem("favorites");
-    //setFavoriteCharacters(store as keyof typeof favoriteCharacters)
-    console.log("chacnito feliz", store);
-  }, []);
 
   // const favs = localStorage.getItem("favorites");
   // if (favoriteCharacters.length === 0) {
@@ -61,8 +56,7 @@ const Characters = () => {
     if (index === -1) {
       const newFavorites = [...favoriteCharacters, { id: value }];
       setFavoriteCharacters(newFavorites);
-
-      // localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
       //console.log(localStorage.getItem("favorites"));
     } else {
       console.log("personaje preexistente");
@@ -72,7 +66,7 @@ const Characters = () => {
       console.log("personaje eliminado: ", index);
     }
   };
-  console.log(localStorage.getItem("favorites"));
+  //console.log(localStorage.getItem("favorites"));
   const cleanFilter = () => {
     setRadioFilter([]);
     setTextFilter("");
@@ -115,13 +109,15 @@ const Characters = () => {
         console.error(error);
         setPageNum(1);
       });
-  }, [textFilter, radioFilter, pageNum, favoriteCharacters]);
+  }, [textFilter, radioFilter, pageNum]);
 
   useEffect(() => {
-    const favoritosGuardados = localStorage.getItem("favorites");
-    console.log("favoritosGuardados", favoritosGuardados);
-    localStorage.setItem("favorites", JSON.stringify(favoriteCharacters));
-  }, [favoriteCharacters]);
+    const store = localStorage.getItem("favorites");
+    if (store) {
+      setFavoriteCharacters(JSON.parse(store));
+    }
+    console.log("chacnito feliz", store);
+  }, []);
   return (
     <Content pt="132px">
       <Card>
