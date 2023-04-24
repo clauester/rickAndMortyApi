@@ -8,7 +8,8 @@ import Box from "@mui/material/Box";
 import { colorStatus } from "../../utils/constans/Index";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CustomModal from "../CustomModal";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import FavoritesContext from "../Context/FavCharactersContext";
 
 interface ItemCardProps {
   id: string;
@@ -17,6 +18,8 @@ interface ItemCardProps {
   species: string;
   status: string;
   gender: string;
+  origin: string;
+  location: string;
   handleClick: (id: string) => void;
   favorite: boolean;
 }
@@ -28,10 +31,13 @@ const ItemCard = ({
   species,
   status,
   gender,
+  origin,
+  location,
   handleClick,
   favorite,
 }: ItemCardProps) => {
   const [openModal, setOpenModal] = useState(false);
+  const { favorites, handleFavorites } = useContext(FavoritesContext);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseMOdal = () => setOpenModal(false);
   const getColorStatus = (status: string) => {
@@ -40,8 +46,17 @@ const ItemCard = ({
   const addFavorite = () => {
     handleClick(id);
   };
-  const handle = () => {
-    console.log("soy la crad");
+  const handleFavorite = () => {
+    if (!favorites.some((elem) => elem.id === id)) {
+      const newFavorites = [...favorites, { id: id }];
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      handleFavorites(newFavorites);
+    } else {
+      console.log("personaje preexistente");
+      const newArray = favorites.filter((data) => data.id !== id);
+      localStorage.setItem("favorites", JSON.stringify(newArray));
+      handleFavorites(newArray);
+    }
   };
 
   return (
@@ -101,6 +116,7 @@ const ItemCard = ({
                     alt={"imgen"}
                     width="auto"
                     height="100%"
+                    style={{ borderTopLeftRadius: "10px" }}
                   />
                 </Grid>
                 <Grid
@@ -114,41 +130,49 @@ const ItemCard = ({
                     <Typography variant="h6">Name: {name}</Typography>
                     <Typography variant="h6">Species: {species}</Typography>
                     <Typography variant="h6">Gender: {gender}</Typography>
-                    <Typography variant="h6">Origen: {gender}</Typography>
-                    <Typography variant="h6">Locations: {gender}</Typography>
+                    <Typography variant="h6">Origen: {origin}</Typography>
+                    <Typography variant="h6">Locations: {location}</Typography>
                   </Grid>
                 </Grid>
               </Grid>
-
-              <Typography
-                color="common.white"
-                variant="h6"
-                style={{
-                  backgroundColor: getColorStatus(status),
-                  height: "40px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                }}
+              <Grid
+                item
+                display="flex"
+                flexDirection="column"
+                alignSelf="flex-end"
+                textAlign="center"
               >
-                {status}
-              </Typography>
+                <Typography
+                  color="common.white"
+                  variant="h6"
+                  style={{
+                    backgroundColor: getColorStatus(status),
+                    height: "40px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    // display: "flex",
+                  }}
+                >
+                  {status}
+                </Typography>
 
-              <Typography
-                variant="body1"
-                color="common.white"
-                style={{
-                  height: "40px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  display: "flex",
-                  background: "#1D212C",
-                  borderBottomLeftRadius: "10px",
-                  borderBottomRightRadius: "10px",
-                }}
-              >
-                Add To favorites
-              </Typography>
+                <Typography
+                  variant="body1"
+                  color="common.white"
+                  onClick={handleFavorite}
+                  style={{
+                    height: "40px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    display: "flex",
+                    backgroundColor: "#1D212C",
+                    borderBottomLeftRadius: "10px",
+                    borderBottomRightRadius: "10px",
+                  }}
+                >
+                  Add To favorites
+                </Typography>
+              </Grid>
             </Box>
           </CustomModal>
 

@@ -45,7 +45,6 @@ const Characters = () => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseMOdal = () => setOpenModal(false);
-  console.log("hola estoy funcionando: ", favorites);
 
   const handleTextFilter = (value: string) => {
     setTextFilter(value);

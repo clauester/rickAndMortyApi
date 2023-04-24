@@ -16,7 +16,7 @@ const ContentCard = ({
 }: ContentCardProps) => {
   const { favorites, handleFavorites } = useContext(FavoritesContext);
 
-  const favoriteData: any = favorites;
+  console.log(characters);
   return (
     <Box
       sx={{
@@ -34,6 +34,8 @@ const ContentCard = ({
           species={data.species}
           status={data.status}
           gender={data.gender}
+          origin={data.origin.name}
+          location={data.location.name}
           key={data.id}
           favorite={favorites.find((e) => e.id === data.id) ? true : false}
           handleClick={handleFavorite}
