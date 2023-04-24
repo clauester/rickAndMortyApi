@@ -71,5 +71,6 @@ button:focus-visible {
 
 body {
   margin: 0;
+  padding-right: 0;
   font-family: "Poppins";
 }

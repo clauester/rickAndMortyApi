@@ -1,17 +1,27 @@
 import Box from "@mui/material/Box";
 import ItemCard from "../ItemsCard";
+import FavoritesContext from "../Context/FavCharactersContext";
+import { useContext } from "react";
 
 interface ContentCardProps {
   characters: any[];
   handleFavorite: (id: string) => void;
+  columnNumber: number;
 }
 
-const ContentCard = ({ characters, handleFavorite }: ContentCardProps) => {
+const ContentCard = ({
+  characters,
+  handleFavorite,
+  columnNumber,
+}: ContentCardProps) => {
+  const { favorites, handleFavorites } = useContext(FavoritesContext);
+
+  const favoriteData: any = favorites;
   return (
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
+        gridTemplateColumns: `repeat(${columnNumber}, 1fr)`,
         gridColumnGap: "25px",
         gridRowGap: "30px",
       }}
@@ -25,6 +35,7 @@ const ContentCard = ({ characters, handleFavorite }: ContentCardProps) => {
           status={data.status}
           gender={data.gender}
           key={data.id}
+          favorite={favorites.find((e) => e.id === data.id) ? true : false}
           handleClick={handleFavorite}
         />
       ))}

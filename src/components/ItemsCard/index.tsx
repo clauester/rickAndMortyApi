@@ -7,6 +7,8 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Box from "@mui/material/Box";
 import { colorStatus } from "../../utils/constans/Index";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CustomModal from "../CustomModal";
+import { useState } from "react";
 
 interface ItemCardProps {
   id: string;
@@ -16,6 +18,7 @@ interface ItemCardProps {
   status: string;
   gender: string;
   handleClick: (id: string) => void;
+  favorite: boolean;
 }
 
 const ItemCard = ({
@@ -26,14 +29,21 @@ const ItemCard = ({
   status,
   gender,
   handleClick,
+  favorite,
 }: ItemCardProps) => {
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseMOdal = () => setOpenModal(false);
   const getColorStatus = (status: string) => {
     return colorStatus[status as keyof typeof colorStatus];
   };
   const addFavorite = () => {
     handleClick(id);
-    console.log("personaje añadido: ", name);
   };
+  const handle = () => {
+    console.log("soy la crad");
+  };
+
   return (
     <Card
       sx={{
@@ -42,18 +52,19 @@ const ItemCard = ({
         position: "relative",
       }}
     >
-      <CardActionArea sx={{ height: "100%" }}>
+      <CardActionArea sx={{ height: "100%", cursor: "default" }}>
         <FavoriteIcon
           sx={{
             position: "absolute",
             left: "15px",
             top: "15px",
             height: "20.54px",
-            color: "rgba(162, 162, 162, 0.5);",
+            color: favorite ? "#B91C1C" : "rgba(162, 162, 162, 0.5)",
             transition: "background-color 0.3s ease-in-out",
             "&:hover": {
               color: "#B91C1C",
             },
+            cursor: "pointer",
           }}
           onClick={addFavorite}
         />
@@ -67,6 +78,7 @@ const ItemCard = ({
         >
           <LazyLoadImage
             src={image}
+            onClick={handleOpenModal}
             effect="blur"
             alt={"imgen"}
             width={160}
@@ -76,8 +88,69 @@ const ItemCard = ({
               borderColor: getColorStatus(status),
               borderWidth: "5px",
               borderStyle: "solid",
+              cursor: "pointer",
             }}
           />
+          <CustomModal open={openModal} handleClose={handleCloseMOdal}>
+            <Box width="100%">
+              <Grid container width="100%" height="490px">
+                <Grid item height="100%">
+                  <LazyLoadImage
+                    src={image}
+                    effect="blur"
+                    alt={"imgen"}
+                    width="auto"
+                    height="100%"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  alignItems="center"
+                  display="grid"
+                  m="20px"
+                  flexGrow={1}
+                >
+                  <Grid gap="20px" display="grid">
+                    <Typography variant="h6">Name: {name}</Typography>
+                    <Typography variant="h6">Species: {species}</Typography>
+                    <Typography variant="h6">Gender: {gender}</Typography>
+                    <Typography variant="h6">Origen: {gender}</Typography>
+                    <Typography variant="h6">Locations: {gender}</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Typography
+                color="common.white"
+                variant="h6"
+                style={{
+                  backgroundColor: getColorStatus(status),
+                  height: "40px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                {status}
+              </Typography>
+
+              <Typography
+                variant="body1"
+                color="common.white"
+                style={{
+                  height: "40px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  display: "flex",
+                  background: "#1D212C",
+                  borderBottomLeftRadius: "10px",
+                  borderBottomRightRadius: "10px",
+                }}
+              >
+                Add To favorites
+              </Typography>
+            </Box>
+          </CustomModal>
 
           <Box width="auto">
             <Typography

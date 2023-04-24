@@ -18,9 +18,11 @@ import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import { ListItemButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import FavoritesContext from "../Context/FavCharactersContext";
 
 const Navbar = () => {
   const { theme, handleTheme } = useContext(ThemeContext);
+  const { favorites, handleFavorites } = useContext(FavoritesContext);
   const [open, setOpen] = useState(false);
 
   const [favoriteCounter, setfavoriteCounter] = useState(
@@ -44,17 +46,17 @@ const Navbar = () => {
   //   console.log("navbar: ", favoriteCounter.length);
   // }, [favoriteCounter]);
 
-  useEffect(() => {
-    const listener = () => {
-      const ids = localStorage.getItem("favorites");
-      const count = ids ? Object.keys(JSON.parse(ids)).length : "";
-      setfavoriteCounter(count);
-    };
+  // useEffect(() => {
+  //   const listener = () => {
+  //     const ids = localStorage.getItem("favorites");
+  //     const count = ids ? Object.keys(JSON.parse(ids)).length : "";
+  //     setfavoriteCounter(count);
+  //   };
 
-    window.addEventListener("storage", listener);
+  //   window.addEventListener("storage", listener);
 
-    return () => window.removeEventListener("storage", listener);
-  }, [localStorage]);
+  //   return () => window.removeEventListener("storage", listener);
+  // }, [localStorage]);
 
   return (
     <AppBar elevation={0} sx={{ bgcolor: "background.paper" }}>
@@ -97,7 +99,7 @@ const Navbar = () => {
                   >
                     <Typography>
                       {page.link === "/favorites"
-                        ? `${page.name}: ${favoriteCounter.length}`
+                        ? `${page.name}: ${favorites.length}`
                         : page.name}
                     </Typography>
                   </Button>

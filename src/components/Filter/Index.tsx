@@ -8,6 +8,8 @@ import { filter } from "../../utils/constans/Index";
 import TitleFilterBy from "../TitleFilterBy";
 import ContentFilterOptions from "../ContentFilterOptions";
 import i18n from "../../config/i18n";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface Filter {
   title: string;
@@ -34,6 +36,9 @@ const Filter = ({ handleSearchFilter, clean }: any) => {
     FilterHeaderState["filterHeader"]
   >([]);
   const [selectedValues, setSelectedValues] = useState<SelectedState>({});
+
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClick = (type: string) => {
     if (filterHeader.includes(type)) {
@@ -92,13 +97,15 @@ const Filter = ({ handleSearchFilter, clean }: any) => {
     });
     setFiltersState({ filters: filtersArray });
   }, [filter]);
+
   return (
     <Grid
       item
       sx={{
         height: "100%",
-        width: "230px",
       }}
+      width={{ xs: "100%", sm: "100%", md: "150px" }}
+      padding={{ xs: "20px", sm: "20px", md: "0px", lg: "0px" }}
     >
       <Box sx={{ display: "flex", alignItems: "center" }}>
         <Typography sx={{ flexGrow: 1 }} variant="h4" fontWeight={700}>
@@ -107,14 +114,15 @@ const Filter = ({ handleSearchFilter, clean }: any) => {
         <ListItemButton
           sx={{
             padding: "0px",
-
             justifyContent: "right",
           }}
         >
-          <DeleteIcon
-            onClick={handleClean}
-            sx={{ width: "30px", height: "auto" }}
-          />
+          {!matches ? (
+            <DeleteIcon
+              onClick={handleClean}
+              sx={{ width: "30px", height: "auto" }}
+            />
+          ) : null}
         </ListItemButton>
       </Box>
       {filtersState.filters.length > 0 && (

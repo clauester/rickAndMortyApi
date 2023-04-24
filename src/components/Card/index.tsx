@@ -12,6 +12,7 @@ const Card = (props: any) => {
         width: "100%",
         padding: "0px",
         margin: "0px",
+        position: "relative",
       }}
     >
       <Grid container minHeight="auto">
