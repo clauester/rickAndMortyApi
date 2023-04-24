@@ -1,4 +1,21 @@
 import axios from "axios";
+// interface InfoProps {
+//   totalPages: number;
+//   nextUrl: string;
+//   count: number;
+//   prevUrl: string;
+// }
+// interface CharacterProps {
+//   id: string;
+//   name: string;
+//   image: string;
+//   species: string;
+//   status: string;
+//   gender: string;
+//   origin: string;
+//   location: string;
+//   Info: InfoProps;
+// }
 interface GlobalFilter {
   type: string;
   value: string;

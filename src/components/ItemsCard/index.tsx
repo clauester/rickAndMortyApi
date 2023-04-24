@@ -11,6 +11,17 @@ import CustomModal from "../CustomModal";
 import { useContext, useState } from "react";
 import FavoritesContext from "../Context/FavCharactersContext";
 
+interface FavoriteCharactersProps {
+  id: string;
+  name: string;
+  image: string;
+  species: string;
+  status: string;
+  gender: string;
+  origin: string;
+  location: string;
+  favorite: boolean;
+}
 interface ItemCardProps {
   id: string;
   name: string;
@@ -20,7 +31,7 @@ interface ItemCardProps {
   gender: string;
   origin: string;
   location: string;
-  handleClick: (id: string) => void;
+  handleClick: (data: FavoriteCharactersProps) => void;
   favorite: boolean;
 }
 
@@ -44,19 +55,44 @@ const ItemCard = ({
     return colorStatus[status as keyof typeof colorStatus];
   };
   const addFavorite = () => {
-    handleClick(id);
+    handleClick({
+      id: id,
+      name: name,
+      image: image,
+      species: species,
+      status: status,
+      gender: gender,
+      origin: origin,
+      location: location,
+      favorite: favorite,
+    });
   };
   const handleFavorite = () => {
-    if (!favorites.some((elem) => elem.id === id)) {
-      const newFavorites = [...favorites, { id: id }];
-      localStorage.setItem("favorites", JSON.stringify(newFavorites));
-      handleFavorites(newFavorites);
-    } else {
-      console.log("personaje preexistente");
-      const newArray = favorites.filter((data) => data.id !== id);
-      localStorage.setItem("favorites", JSON.stringify(newArray));
-      handleFavorites(newArray);
-    }
+    // if (!favorites.some((elem) => elem.id === id)) {
+    //   const newFavorites = [
+    //     ...favorites,
+    //     {
+    //       id: id,
+    //       name: name,
+    //       image: image,
+    //       species: species,
+    //       status: status,
+    //       gender: gender,
+    //       origin: origin,
+    //       location: location,
+    //       favorite: favorite,
+    //     },
+    //   ];
+    //   localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    //   handleFavorites(newFavorites);
+
+    //   console.log("dasasda: ", origin);
+    // } else {
+    const newArray = favorites.filter((data) => data.id !== id);
+    console.log("soy el problema; ", newArray);
+    localStorage.setItem("favorites", JSON.stringify(newArray));
+    handleFavorites(newArray);
+    //}
   };
 
   return (

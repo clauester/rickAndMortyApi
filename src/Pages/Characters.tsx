@@ -25,11 +25,19 @@ interface InfoProps {
 }
 interface FavoriteCharactersProps {
   id: string;
+  name: string;
+  image: string;
+  species: string;
+  status: string;
+  gender: string;
+  origin: string;
+  location: string;
+  favorite: boolean;
 }
 const Characters = () => {
   // console.log(localStorage.getItem("favorites"));
   const { favorites, handleFavorites } = useContext(FavoritesContext);
-  const [characters, setCharacters] = useState<any[]>([]);
+  const [characters, setCharacters] = useState<FavoriteCharactersProps[]>([]);
   const [favoriteCharacters, setFavoriteCharacters] = useState<
     FavoriteCharactersProps[]
   >([]);
@@ -45,26 +53,31 @@ const Characters = () => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseMOdal = () => setOpenModal(false);
-
+  console.log("saaaaff", favoriteCharacters);
   const handleTextFilter = (value: string) => {
     setTextFilter(value);
     setPageNum(1);
   };
-  const handleFavorite = (value: string) => {
-    if (!favoriteCharacters.some((elem) => elem.id === value)) {
-      const newFavorites = [...favoriteCharacters, { id: value }];
+  const handleFavorite = (data: FavoriteCharactersProps) => {
+    console.log("hola soy data:", data);
+    if (!favoriteCharacters.some((elem) => elem.id === data.id)) {
+      const newFavorites = [...favoriteCharacters, data];
       setFavoriteCharacters(newFavorites);
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
 
-      console.log("personaje añadido: ", value);
+      console.log("personaje añadido: ", newFavorites);
       handleFavorites(newFavorites);
     } else {
       console.log("personaje preexistente");
-      const newArray = favoriteCharacters.filter((data) => data.id !== value);
+      console.log("yo si soy el problema");
+      const newArray = favoriteCharacters.filter(
+        (value) => value.id !== data.id
+      );
+      console.log("a:", newArray);
       setFavoriteCharacters(newArray);
       localStorage.setItem("favorites", JSON.stringify(newArray));
       handleFavorites(newArray);
-      console.log("personaje eliminado: ", parseInt(value));
+      console.log("personaje eliminado: ", parseInt(data.id));
       console.log("actuales: ", newArray);
     }
   };

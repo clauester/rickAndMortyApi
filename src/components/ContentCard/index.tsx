@@ -3,10 +3,21 @@ import ItemCard from "../ItemsCard";
 import FavoritesContext from "../Context/FavCharactersContext";
 import { useContext } from "react";
 
+interface FavoriteCharactersProps {
+  id: string;
+  name: string;
+  image: string;
+  species: string;
+  status: string;
+  gender: string;
+  origin: string;
+  location: string;
+  favorite: boolean;
+}
 interface ContentCardProps {
   characters: any[];
-  handleFavorite: (id: string) => void;
-  columnNumber: number;
+  handleFavorite: (data: FavoriteCharactersProps) => void;
+  columnNumber?: number;
 }
 
 const ContentCard = ({
@@ -16,12 +27,11 @@ const ContentCard = ({
 }: ContentCardProps) => {
   const { favorites, handleFavorites } = useContext(FavoritesContext);
 
-  console.log(characters);
   return (
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: `repeat(${columnNumber}, 1fr)`,
+        gridTemplateColumns: `repeat(${columnNumber || 3}, 1fr)`,
         gridColumnGap: "25px",
         gridRowGap: "30px",
       }}

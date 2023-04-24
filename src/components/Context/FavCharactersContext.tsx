@@ -2,6 +2,14 @@ import { createContext, useState } from "react";
 
 interface FavoriteCharactersProps {
   id: string;
+  name: string;
+  image: string;
+  species: string;
+  status: string;
+  gender: string;
+  origin: string;
+  location: string;
+  favorite: boolean;
 }
 interface FavoritesContextProps {
   favorites: FavoriteCharactersProps[];
@@ -16,6 +24,7 @@ const FavoritesContext = createContext<FavoritesContextProps>({
 const initialFavorites = (): FavoriteCharactersProps[] => {
   const store = localStorage.getItem("favorites");
   if (store) {
+    console.log("initial: ", store);
     return JSON.parse(store);
   } else {
     return JSON.parse("{}");
